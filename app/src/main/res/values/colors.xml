@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="red" type="color">#F9423A</item>
+    <item name="black" type="color">#34362F</item>
+    <item name="tan" type="color">#8F836D</item>
+    <item name="cream" type="color">#D6D2C4</item>
+</resources>

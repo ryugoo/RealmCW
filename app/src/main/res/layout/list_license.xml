@@ -1,0 +1,32 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="72dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                tools:ignore="ContentDescription,RtlHardcoded">
+
+    <TextView
+        android:id="@+id/license_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:text="ActiveAndroid"/>
+
+    <TextView
+        android:id="@+id/license_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/license_name"
+        android:layout_marginBottom="16dp"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="normal"
+        tools:text="Copyright (C) 2010 Michael Pardo\n\nLicensed under the Apache License, Version 2.0 (the &quot;License&quot;);\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n   http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an &quot;AS IS&quot; BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License."/>
+
+</RelativeLayout>
