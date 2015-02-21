@@ -47,6 +47,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'de.greenrobot:eventbus:2.4.0'
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
+    compile 'io.realm:realm-android:0.79.1'
 }
 
 retrolambda {
