@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -29,10 +28,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.chatwork.android.realmcw.utilities.ChatWorkClient;
 import com.chatwork.android.realmcw.R;
-import com.chatwork.android.realmcw.utilities.Utils;
 import com.chatwork.android.realmcw.models.Room;
+import com.chatwork.android.realmcw.utilities.ChatWorkClient;
+import com.chatwork.android.realmcw.utilities.Utils;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashSet;
@@ -143,10 +142,8 @@ public class RoomListActivity extends ActionBarActivity implements SwipeRefreshL
 
         final MenuItem menuItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
-        if (searchView != null) {
-            searchView.setFocusable(true);
-            searchView.setOnQueryTextListener(this);
-        }
+        searchView.setFocusable(true);
+        searchView.setOnQueryTextListener(this);
 
         return true;
     }
@@ -326,26 +323,23 @@ public class RoomListActivity extends ActionBarActivity implements SwipeRefreshL
             final EditText editText = ButterKnife.findById(view, R.id.send_message);
             return new AlertDialog.Builder(getActivity())
                     .setView(view)
-                    .setPositiveButton("Send", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            final long roomId = getArguments().getLong("ROOM_ID");
-                            final String message = editText.getText().toString();
-                            final Intent intent = new Intent();
-                            final int sendCode;
-                            if (message.trim().length() != 0) {
-                                intent.putExtra("ROOM_ID", roomId);
-                                intent.putExtra("SEND_MESSAGE", message);
-                                sendCode = Activity.RESULT_OK;
-                            } else {
-                                sendCode = Activity.RESULT_CANCELED;
-                            }
-                            final PendingIntent pendingIntent = getActivity().createPendingResult(getTargetRequestCode(), intent, PendingIntent.FLAG_ONE_SHOT);
-                            try {
-                                pendingIntent.send(sendCode);
-                            } catch (PendingIntent.CanceledException e) {
-                                e.printStackTrace();
-                            }
+                    .setPositiveButton("Send", (dialog, which) -> {
+                        final long roomId = getArguments().getLong("ROOM_ID");
+                        final String message = editText.getText().toString();
+                        final Intent intent = new Intent();
+                        final int sendCode;
+                        if (message.trim().length() != 0) {
+                            intent.putExtra("ROOM_ID", roomId);
+                            intent.putExtra("SEND_MESSAGE", message);
+                            sendCode = Activity.RESULT_OK;
+                        } else {
+                            sendCode = Activity.RESULT_CANCELED;
+                        }
+                        final PendingIntent pendingIntent = getActivity().createPendingResult(getTargetRequestCode(), intent, PendingIntent.FLAG_ONE_SHOT);
+                        try {
+                            pendingIntent.send(sendCode);
+                        } catch (PendingIntent.CanceledException e) {
+                            e.printStackTrace();
                         }
                     })
                     .setNegativeButton("Cancel", null)

@@ -81,12 +81,7 @@ public class ChatWorkClient {
                     createRoomsWithRealm(jsonArray, context, true);
                 } else {
                     createRoomsWithRealm(jsonArray, context, false);
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            createRoomsWithActiveAndroid(jsonArray, context);
-                        }
-                    }).start();
+                    new Thread(() -> createRoomsWithActiveAndroid(jsonArray, context)).start();
                 }
 
                 EventBus.getDefault().post(new ListRoomsEvent(true));
@@ -146,28 +141,25 @@ public class ChatWorkClient {
         }
         final Realm realm = Realm.getInstance(context);
         final long startTime = System.nanoTime();
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                for (final JsonElement jsonElement : jsonArray) {
-                    final JsonObject jsonObject = jsonElement.getAsJsonObject();
-                    // final Room room = GSON.fromJson(jsonObject, Room.class);
-                    final Room room = new Room();
-                    room.setRoomId(jsonObject.get("room_id").getAsLong());
-                    room.setName(jsonObject.get("name").getAsString());
-                    room.setType(jsonObject.get("type").getAsString());
-                    room.setRole(jsonObject.get("role").getAsString());
-                    room.setSticky(jsonObject.get("sticky").getAsBoolean());
-                    room.setUnreadNum(jsonObject.get("unread_num").getAsLong());
-                    room.setMentionNum(jsonObject.get("mention_num").getAsLong());
-                    room.setMytaskNum(jsonObject.get("mytask_num").getAsLong());
-                    room.setMessageNum(jsonObject.get("message_num").getAsLong());
-                    room.setFileNum(jsonObject.get("file_num").getAsLong());
-                    room.setTaskNum(jsonObject.get("task_num").getAsLong());
-                    room.setIconPath(jsonObject.get("icon_path").getAsString());
-                    room.setLastUpdateTime(jsonObject.get("last_update_time").getAsLong());
-                    realm.copyToRealmOrUpdate(room);
-                }
+        realm.executeTransaction(_realm -> {
+            for (final JsonElement jsonElement : jsonArray) {
+                final JsonObject jsonObject = jsonElement.getAsJsonObject();
+                // final Room room = GSON.fromJson(jsonObject, Room.class);
+                final Room room = new Room();
+                room.setRoomId(jsonObject.get("room_id").getAsLong());
+                room.setName(jsonObject.get("name").getAsString());
+                room.setType(jsonObject.get("type").getAsString());
+                room.setRole(jsonObject.get("role").getAsString());
+                room.setSticky(jsonObject.get("sticky").getAsBoolean());
+                room.setUnreadNum(jsonObject.get("unread_num").getAsLong());
+                room.setMentionNum(jsonObject.get("mention_num").getAsLong());
+                room.setMytaskNum(jsonObject.get("mytask_num").getAsLong());
+                room.setMessageNum(jsonObject.get("message_num").getAsLong());
+                room.setFileNum(jsonObject.get("file_num").getAsLong());
+                room.setTaskNum(jsonObject.get("task_num").getAsLong());
+                room.setIconPath(jsonObject.get("icon_path").getAsString());
+                room.setLastUpdateTime(jsonObject.get("last_update_time").getAsLong());
+                _realm.copyToRealmOrUpdate(room);
             }
         });
         final long endTime = System.nanoTime();

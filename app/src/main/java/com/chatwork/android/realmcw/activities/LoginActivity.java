@@ -4,21 +4,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.chatwork.android.realmcw.utilities.ChatWorkClient;
 import com.chatwork.android.realmcw.R;
+import com.chatwork.android.realmcw.utilities.ChatWorkClient;
 import com.chatwork.android.realmcw.utilities.Utils;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
 
 public class LoginActivity extends ActionBarActivity {
+    @SuppressWarnings("unused")
     private static final String TAG = LoginActivity.class.getSimpleName();
     @InjectView(R.id.chatwork_api_token)
     public EditText mTokenField;
@@ -42,6 +45,8 @@ public class LoginActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
+
+        mLoginButton.setOnClickListener(this::login);
     }
 
     @Override
@@ -57,11 +62,29 @@ public class LoginActivity extends ActionBarActivity {
         EventBus.getDefault().unregister(this);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_login, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_license) {
+            startActivity(LicenseActivity.createIntent(getApplicationContext()));
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
     /**
      * Try ChatWork login request
+     *
+     * @param view View object
      */
-    @OnClick(R.id.chatwork_login)
-    public void login() {
+    public void login(final View view) {
         mLoginButton.setEnabled(false);
 
         final String token = mTokenField.getText().toString().trim();

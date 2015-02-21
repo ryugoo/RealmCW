@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.chatwork.android.realmcw.activities.LoginActivity"
+      tools:ignore="HardcodedText">
+
+    <item
+        android:id="@+id/action_license"
+        android:orderInCategory="100"
+        android:title="License"
+        app:showAsAction="never"/>
+
+</menu>

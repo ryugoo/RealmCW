@@ -51,6 +51,8 @@ public class LicenseActivity extends ActionBarActivity {
         licenses.add(new License("OkHttp", "Square", "2013", License.Type.APACHE_V2));
         licenses.add(new License("Picasso", "Square", "2013", License.Type.APACHE_V2));
         licenses.add(new License("Realm", "Realm", "2014", License.Type.APACHE_V2));
+        licenses.add(new License("Retrolambda", "Esko Luontola", "2013", License.Type.APACHE_V2));
+        licenses.add(new License("Gradle Retrolambda Plugin", "Evan Tatarka", "2014", License.Type.APACHE_V2));
 
         // Set adapter
         final LicenseAdapter adapter = new LicenseAdapter(getApplicationContext(), licenses);
@@ -81,7 +83,7 @@ public class LicenseActivity extends ActionBarActivity {
             }
 
             licenseViewHolder.licenseName.setText(license.getName());
-            licenseViewHolder.licenseBody.setText(String.format(mContext.getString(R.string.license_apache_v2, license.getYear(), license.getAuthor())));
+            licenseViewHolder.licenseBody.setText(String.format(mContext.getString(R.string.license_apache_v2), license.getYear(), license.getAuthor()));
 
             return view;
         }
